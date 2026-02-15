@@ -1,7 +1,7 @@
 #!/bin/bash
 # =========================================
-# Instalador desatendido completo de GPSafe Web 6.11.1
-# Copia todo el frontend al directorio /opt/traccar/web
+# Instalador desatendido GPSafe Web 6.11.1
+# Clona todo el frontend y lo copia a /opt/traccar/web
 # =========================================
 
 set -e
@@ -10,8 +10,8 @@ set -o pipefail
 # -----------------------------
 # Configuración
 # -----------------------------
-REPO_ZIP_URL="https://github.com/jcares/web-gpsafe2026V6.11.1/archive/refs/heads/main.zip"
-TMP_DIR="/tmp/gpsafe-web"
+REPO_GIT="https://github.com/jcares/web-gpsafe2026V6.11.1.git"
+TMP_DIR="/tmp/web-gpsafe"
 DEST_DIR="/opt/traccar/web"
 
 echo "==> Inicio de instalación GPSafe Web 6.11.1"
@@ -26,26 +26,13 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # -----------------------------
-# Crear carpeta temporal
+# Clonar repositorio temporal
 # -----------------------------
 rm -rf "$TMP_DIR"
 mkdir -p "$TMP_DIR"
 
-# -----------------------------
-# Descargar y descomprimir ZIP
-# -----------------------------
-echo "==> Descargando frontend desde GitHub..."
-wget -O "$TMP_DIR/gpsafe.zip" "$REPO_ZIP_URL"
-
-echo "==> Descomprimiendo archivos..."
-unzip -q "$TMP_DIR/gpsafe.zip" -d "$TMP_DIR"
-
-# Carpeta fuente del ZIP
-SRC_DIR=$(find "$TMP_DIR" -maxdepth 1 -type d -name "*main" | head -n1)
-if [ ! -d "$SRC_DIR" ]; then
-    echo "ERROR: No se encontró la carpeta descomprimida del frontend"
-    exit 1
-fi
+echo "==> Clonando repositorio completo desde GitHub..."
+git clone --depth 1 "$REPO_GIT" "$TMP_DIR"
 
 # -----------------------------
 # Backup de frontend anterior
@@ -65,12 +52,12 @@ mkdir -p "$DEST_DIR"
 # Copiar archivos con progreso simple
 # -----------------------------
 echo "==> Copiando archivos al destino ($DEST_DIR)..."
-TOTAL=$(find "$SRC_DIR" -type f | wc -l)
+TOTAL=$(find "$TMP_DIR" -type f | wc -l)
 COUNT=0
 
 copy_file() {
     local SRC_FILE="$1"
-    local REL_PATH="${SRC_FILE#$SRC_DIR/}"
+    local REL_PATH="${SRC_FILE#$TMP_DIR/}"
     local DEST_FILE="$DEST_DIR/$REL_PATH"
     mkdir -p "$(dirname "$DEST_FILE")"
     cp -a "$SRC_FILE" "$DEST_FILE"
@@ -80,9 +67,9 @@ copy_file() {
 }
 
 export -f copy_file
-export SRC_DIR DEST_DIR COUNT TOTAL
+export TMP_DIR DEST_DIR COUNT TOTAL
 
-find "$SRC_DIR" -type f | while read FILE; do
+find "$TMP_DIR" -type f | while read FILE; do
     copy_file "$FILE"
 done
 
