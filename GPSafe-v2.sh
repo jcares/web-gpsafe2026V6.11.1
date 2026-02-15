@@ -1,15 +1,12 @@
 #!/bin/bash
 # =========================================
 # Instalador desatendido GPSafe Web 6.11.1
-# Clona todo el frontend y lo copia a /opt/traccar/web
+# Clona todo el frontend al directorio /opt/traccar/web
 # =========================================
 
 set -e
 set -o pipefail
 
-# -----------------------------
-# Configuración
-# -----------------------------
 REPO_GIT="https://github.com/jcares/web-gpsafe2026V6.11.1.git"
 TMP_DIR="/tmp/web-gpsafe"
 DEST_DIR="/opt/traccar/web"
@@ -49,31 +46,10 @@ fi
 mkdir -p "$DEST_DIR"
 
 # -----------------------------
-# Copiar archivos con progreso simple
+# Copiar todo el contenido incluyendo subcarpetas
 # -----------------------------
-echo "==> Copiando archivos al destino ($DEST_DIR)..."
-TOTAL=$(find "$TMP_DIR" -type f | wc -l)
-COUNT=0
-
-copy_file() {
-    local SRC_FILE="$1"
-    local REL_PATH="${SRC_FILE#$TMP_DIR/}"
-    local DEST_FILE="$DEST_DIR/$REL_PATH"
-    mkdir -p "$(dirname "$DEST_FILE")"
-    cp -a "$SRC_FILE" "$DEST_FILE"
-    ((COUNT++))
-    PERCENT=$((COUNT*100/TOTAL))
-    echo -ne "\rProgreso: $PERCENT% ($COUNT/$TOTAL)"
-}
-
-export -f copy_file
-export TMP_DIR DEST_DIR COUNT TOTAL
-
-find "$TMP_DIR" -type f | while read FILE; do
-    copy_file "$FILE"
-done
-
-echo -e "\n==> Archivos copiados correctamente."
+echo "==> Copiando todo el contenido al destino ($DEST_DIR)..."
+cp -a "$TMP_DIR/." "$DEST_DIR"
 
 # -----------------------------
 # Ajustar permisos según Traccar
