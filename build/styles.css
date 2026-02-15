@@ -1,0 +1,110 @@
+/* ==========================
+   Estilos globales GPSafe
+   ========================== */
+
+/* Reset básico */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #E2E9EF; /* Fondo claro de GPSafe */
+  color: #646484; /* Texto principal */
+}
+
+/* Contenedor principal */
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #E2E9EF;
+}
+
+/* Loader */
+.loader {
+  position: fixed;
+  top: calc(50% - 25px);
+  left: calc(50% - 25px);
+  width: 50px;
+  aspect-ratio: 1;
+  box-sizing: content-box;
+  animation: rotateLoader 1s infinite linear;
+  border-radius: 50%;
+  border: 8px solid lightgray;
+  border-right-color: #3BA89C; /* color principal GPSafe */
+}
+
+@keyframes rotateLoader {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* Enlaces */
+a {
+  color: #3BA89C;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #24947C;
+  text-decoration: underline;
+}
+
+/* Botones */
+button {
+  background-color: #3BA89C;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #24947C;
+}
+
+/* Tarjetas / paneles */
+.card {
+  background-color: white;
+  border: 1px solid #80A0B0;
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Textos secundarios */
+.text-secondary {
+  color: #7E89A4;
+}
+
+/* Soporte modo oscuro automático */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1B1A55; /* Header oscuro GPSafe */
+    color: #E2E9EF;
+  }
+
+  .card {
+    background-color: #2E7080;
+    border-color: #646484;
+    color: #E2E9EF;
+  }
+
+  a {
+    color: #3BA89C;
+  }
+
+  a:hover {
+    color: #24947C;
+  }
+
+  button {
+    background-color: #3BA89C;
+  }
+
+  button:hover {
+    background-color: #24947C;
+  }
+}

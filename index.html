@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Meta theme-color para navegadores Chromium; Firefox lo ignora -->
+    <meta name="theme-color" content="#3BA89C" />
+    <meta name="description" content="GPSafe - Monitoreo y gestión de flotas en www.gpsafechile.cl" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" sizes="180x180" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>GPSafe</title>
+    <style>
+      :root {
+        --primary-color: #3BA89C;
+        --secondary-color: #24947C;
+        --background-color: #E2E9EF;
+        --header-color: #1B1A55;
+        --menu-color: #2E7080;
+        --text-color: #646484;
+        --text-secondary-color: #7E89A4;
+        --card-border-color: #80A0B0;
+        --chart-bg-color: #4C4C7C;
+        --accent-color: #343464;
+      }
+
+      .loader {
+        position: fixed;
+        top: calc(50% - 25px);
+        left: calc(50% - 25px);
+        width: 50px;
+        aspect-ratio: 1;
+        box-sizing: content-box;
+        animation: ll 1s infinite linear;
+        border-radius: 50%;
+        border: 8px solid lightgray;
+        border-right-color: black;
+      }
+
+      @keyframes ll {
+        to {
+          transform: rotate(1turn);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      JavaScript debe estar habilitado para usar
+      <a href="https://www.gpsafechile.cl/">GPSafe Sistema de Monitoreo GPS</a>.
+    </noscript>
+
+    <div id="root" class="root"></div>
+    <div class="loader"></div>
+
+    <script type="module" src="/src/index.jsx" onerror="console.error('Error cargando la app GPSafe.')"></script>
+  </body>
+</html>
