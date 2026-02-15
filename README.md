@@ -1,6 +1,6 @@
 # Interfaz Web GPSafe
 
-sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/jcares/web-gpsafe2026V6.11.1/refs/heads/main/GPSafe-v2.sh)"
+sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/jcares/web-gpsafe2026V6.11.1/refs/heads/main/instaladorWEB-GPSafe-v2.sh)"
 
 ## Resumen
 
