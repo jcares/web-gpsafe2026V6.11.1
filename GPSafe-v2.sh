@@ -2,6 +2,7 @@
 # =========================================
 # Instalador desatendido GPSafe Web 6.11.1
 # Clona todo el frontend al directorio /opt/traccar/web
+# Muestra solo la cantidad de archivos a copiar
 # =========================================
 
 set -e
@@ -28,8 +29,14 @@ fi
 rm -rf "$TMP_DIR"
 mkdir -p "$TMP_DIR"
 
-echo "==> Clonando repositorio completo desde GitHub..."
+echo "==> Clonando repositorio desde GitHub..."
 git clone --depth 1 "$REPO_GIT" "$TMP_DIR"
+
+# -----------------------------
+# Contar cantidad de archivos
+# -----------------------------
+TOTAL_FILES=$(find "$TMP_DIR" -type f | wc -l)
+echo "==> Archivos a copiar: $TOTAL_FILES"
 
 # -----------------------------
 # Backup de frontend anterior
@@ -46,20 +53,20 @@ fi
 mkdir -p "$DEST_DIR"
 
 # -----------------------------
-# Copiar todo el contenido incluyendo subcarpetas
+# Copiar todo el contenido
 # -----------------------------
-echo "==> Copiando todo el contenido al destino ($DEST_DIR)..."
+echo "==> Copiando todos los archivos al destino..."
 cp -a "$TMP_DIR/." "$DEST_DIR"
 
 # -----------------------------
-# Ajustar permisos según Traccar
+# Ajustar permisos
 # -----------------------------
 TRACCAR_USER=$(ps -eo user,comm | grep traccar | grep -v grep | awk '{print $1}' | head -n1)
 if [ -z "$TRACCAR_USER" ]; then
     TRACCAR_USER="traccar"
 fi
 
-echo "==> Ajustando permisos para usuario del servicio: $TRACCAR_USER"
+echo "==> Ajustando permisos para el usuario: $TRACCAR_USER"
 chown -R "$TRACCAR_USER":"$TRACCAR_USER" "$DEST_DIR"
 chmod -R 755 "$DEST_DIR"
 
@@ -69,7 +76,8 @@ chmod -R 755 "$DEST_DIR"
 echo "========================================="
 echo " Instalación completada."
 echo " Carpeta destino: $DEST_DIR"
-echo " Usuario propietario ajustado a: $TRACCAR_USER"
+echo " Usuario propietario: $TRACCAR_USER"
+echo " Archivos copiados: $TOTAL_FILES"
 echo " Si es necesario, reinicia el servidor Traccar:"
 echo " sudo systemctl restart traccar"
 echo "========================================="
