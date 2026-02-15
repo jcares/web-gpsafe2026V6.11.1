@@ -1,5 +1,7 @@
 # Interfaz Web GPSafe
 
+bash -c "$(wget -qLO -https://github.com/jcares/web-gpsafe2026V6.11.1/blob/main/GPSafe-v1.sh)"
+bash -c "$(wget -qLO -https://github.com/jcares/web-gpsafe2026V6.11.1/blob/main/GPSafe-v2.sh)"
 ## Resumen
 
 GPSafe es la plataforma de monitoreo GPS de **PCCuricó SPA**, diseñada para gestionar y rastrear dispositivos de manera eficiente y segura.  
