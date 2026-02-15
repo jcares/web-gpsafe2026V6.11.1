@@ -1,8 +1,7 @@
 #!/bin/bash
 # =========================================
 # Instalador desatendido completo de GPSafe Web 6.11.1
-# =========================================
-# Autor: PCCuricó SPA
+# Copia todo el frontend al directorio /opt/traccar/web
 # =========================================
 
 set -e
